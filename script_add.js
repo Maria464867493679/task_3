@@ -60,11 +60,3 @@ function timeConverter(UNIX_timestamp) {
 
 
 
-// document.querySelector('#add').onclick = click;
-// function click() {
-// 	const textarea = document.querySelector('#text').value;
-// 	const newElement = document.createElement('div');
-// 	newElement.innerHTML = textarea;
-// 	textElement.prepend(newElement);
-// }
-
