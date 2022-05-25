@@ -3,34 +3,38 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded',() => {
+			createTodoApp(document.getElementById('list-1'), 'Task list', key = 'list-1');
+		})
+	</script>
 	<title>TASK LIST</title>
 </head>
 <body>
+	<div id="list-1" class="container"></div>
+<!-- 
 <div class="wrapper">
-	<div class="title">Task list</div>
-
-
+	<div class="title">TASK LIST</div>
 	<div class="block1">
 		<form>
 			<input type="name" id="task-body" placeholder="Enter text..">
-			<button type="submit" id="task-add">ADD TASK</button>
 
-			<button>REMOVE ALL</button>
-			<button>READY ALL</button>
+			<button type="submit" id="task-add">ADD TASK</button>
+			<button id="ready-all">READY ALL</button>
+			<button id="all-del">REMOVE ALL</button>
 		</form>
 	</div>
-
 	<div id="block2" class="block2">
 		<div id="one" class="one">
-			text text text text		
+		Text
 			<button>READY</button>
 			<button>DELETE</button>
 		</div>
 	</div>
-
-
-</div>
+</div> -->
 <script type="text/javascript" src="script_add.js"></script>
 </body>
 </html>

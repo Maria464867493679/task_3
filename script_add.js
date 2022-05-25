@@ -1,61 +1,137 @@
 
 
+let todoArray =[];
 
+const createAppTitle = (title) => {
+	const appTitle = document.createElement('h1');
+	appTitle.innerHTML = title;
+	return appTitle;
+}
 
+const createTodoForm = () => {
+	const form = document.createElement('form');
+	const input = document.createElement('input');
+	const addButton = document.createElement('button');
+	const wrapper = document.createElement('DIV');
 
+	form.classList.add('input-group', 'mb-3');
+	input.classList.add('form-control');
+	input.placeholder = 'Enter text..';
+	addButton.classList.add('btn', 'btn-primary');
+	wrapper.classList.add('input-group-append');
+	addButton.textContent = 'ADD TASK';
 
+	wrapper.append(addButton);
+	form.append(input);
+	form.append(wrapper);
 
-
-let tasks = [];
-loadTask();
-
-document.getElementById('task-add').onclick = function() {
-	event.preventDefault();
-	let taskBody = document.getElementById('task-body');
-
-	let task = {
-		body : taskBody.value,
-		time : Math.floor(Date.now()/1000)
+	return {
+		form,
+		input,
+		addButton,
 	}
-	taskBody.value = '';
-	tasks.push(task);
-
-	saveTask();
-	showTasks();
 }
 
-function saveTask() {
-	localStorage.setItem('tasks', JSON.stringify(tasks));
+const createTodoList = () => {
+	const list = document.createElement('ul');
+	list.classList.add('list-group');
+	return list; 
 }
 
-function loadTask() {
-	if (localStorage.getItem('tasks')) tasks = JSON.parse(localStorage.getItem('tasks'));
-	showTasks();
+const createTodoItem = (name) => {
+	const todoItem = document.createElement('li');
+	const btnWrapper = document.createElement('div');
+	const doneBtn = document.createElement('button');
+	const deleteBtn = document.createElement('button');
+
+	const randomId = Math.random() * 15.75;
+	todoItem.id = randomId.toFixed(2);
+
+	todoItem.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+	doneBtn.classList.add('btn', 'btn-success');
+	deleteBtn.classList.add('btn', 'btn-danger');
+	todoItem.textContent = name;
+	doneBtn.textContent = 'Ready';
+	deleteBtn.textContent = 'Del';
+
+	btnWrapper.append(doneBtn, deleteBtn);
+	todoItem.append(btnWrapper);
+	return {
+		todoItem,
+		doneBtn,
+		deleteBtn, 
+	}
+}
+ 
+const changeItemDone = (arr, item) => {
+	arr.map(obj => {
+		if (obj.id === item.id & obj.done === false) {
+			obj.done = true;
+		} else {
+			obj.done = false;
+		}
+	})
 }
 
-function showTasks() {
-	let taskField = document.getElementById('block2');
-	let out = '';
+const completeTodoItem = (item, btn) => {
+	btn.addEventListener('click', () => {
+		todoArray = JSON.parse(localStorage.getItem(key));
+		item.classList.toggle('list-group-item-success');
+		changeItemDone(todoArray, item);
 
-	tasks.forEach(function(item) {
-		out += `<div class="one"><p><em>${timeConverter(item.time)}</em></p>`;
-		out += `<p>${item.body}</p></div>`;
+		localStorage.setItem(key, JSON.stringify(todoArray))
 	});
-	taskField.innerHTML = out;
 }
 
-function timeConverter(UNIX_timestamp) {
-	let a = new Date(UNIX_timestamp * 1000);
-	let months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-	let year = a.getFullYear();
-	let month = months[a.getMonth()];
-	let date = a.getDate();
-	let hour = a.getHours();
-	let min = a.getMinutes();
-	let sec = a.getSeconds();
-	let time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
-	return time; 
+const deleteTodoItem = (item, btn) => {
+	btn.addEventListener('click', () => {
+		todoArray = JSON.parse(localStorage.getItem(key));
+		const neaList = todoArray.filter(obj => obj.id !== item.id);
+		localStorage.setItem(key, JSON.stringify(neaList));
+		item.remove();
+	});
 }
+
+function createTodoApp(container, title, key) {
+    const appTitle = createAppTitle(title);
+    const appForm = createTodoForm();
+    const appList = createTodoList();
+
+    container.append(appTitle, appForm.form, appList);
+
+	appForm.form.addEventListener('submit', e => {
+        e.preventDefault();
+
+        const todoItem = createTodoItem(appForm.input.value);
+
+        if (!appForm.input.value) {
+            return;
+        }
+        completeTodoItem(todoItem.todoItem, todoItem.doneBtn);
+        deleteTodoItem(todoItem.todoItem, todoItem.deleteBtn);
+
+        
+
+        const createItemObj = (arr) => {
+        	const itemObj = {};
+        	itemObj.name = appForm.input.value;
+        	itemObj.id = todoItem.todoItem.id;
+        	itemObj.done = false;
+        	arr.push(itemObj);
+        }
+        createItemObj(todoArray);
+        localStorage.setItem(key, JSON.stringify(todoArray));
+
+
+
+		appList.append(todoItem.todoItem);
+        appForm.input.value = '';
+	})
+}
+
+
+
+
 
 
 
