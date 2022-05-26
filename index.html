@@ -14,27 +14,15 @@
 	<title>TASK LIST</title>
 </head>
 <body>
-	<div id="list-1" class="container"></div>
-<!-- 
-<div class="wrapper">
-	<div class="title">TASK LIST</div>
-	<div class="block1">
-		<form>
-			<input type="name" id="task-body" placeholder="Enter text..">
 
-			<button type="submit" id="task-add">ADD TASK</button>
-			<button id="ready-all">READY ALL</button>
-			<button id="all-del">REMOVE ALL</button>
-		</form>
+	<div id="list-1" class="container">
+		<button class="btn btn-primary" onclick="deleteAll()">REMOVE ALL</button>
+		<script type="text/javascript">
+			function deleteAll() {
+				localStorage.clear();
+			}
+		</script>
 	</div>
-	<div id="block2" class="block2">
-		<div id="one" class="one">
-		Text
-			<button>READY</button>
-			<button>DELETE</button>
-		</div>
-	</div>
-</div> -->
-<script type="text/javascript" src="script_add.js"></script>
+	<script type="text/javascript" src="script_add.js"></script>	
 </body>
 </html>

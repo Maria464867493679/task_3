@@ -51,8 +51,8 @@ const createTodoItem = (name) => {
 	doneBtn.classList.add('btn', 'btn-success');
 	deleteBtn.classList.add('btn', 'btn-danger');
 	todoItem.textContent = name;
-	doneBtn.textContent = 'Ready';
-	deleteBtn.textContent = 'Del';
+	doneBtn.textContent = 'READY';
+	deleteBtn.textContent = 'DELETE';
 
 	btnWrapper.append(doneBtn, deleteBtn);
 	todoItem.append(btnWrapper);
@@ -60,6 +60,7 @@ const createTodoItem = (name) => {
 		todoItem,
 		doneBtn,
 		deleteBtn, 
+		btnWrapper,
 	}
 }
  
@@ -67,7 +68,7 @@ const changeItemDone = (arr, item) => {
 	arr.map(obj => {
 		if (obj.id === item.id & obj.done === false) {
 			obj.done = true;
-		} else {
+		} else if (obj.id === item.id & obj.done === true) {
 			obj.done = false;
 		}
 	})
@@ -99,6 +100,30 @@ function createTodoApp(container, title, key) {
 
     container.append(appTitle, appForm.form, appList);
 
+    if (localStorage.getItem(key)) {
+    	todoArray = JSON.parse(localStorage.getItem(key));
+
+    	for (const obj of todoArray) {
+	        const todoItem = createTodoItem(appForm.input.value);
+
+
+	        todoItem.todoItem.textContent = obj.name;
+	        todoItem.todoItem.id = obj.id;
+
+	        if (obj.done == true) {
+	        	todoItem.todoItem.classList.add('list-group-item-success');
+	        } else {
+	        	todoItem.todoItem.classList.remove('list-group-item-success');
+	        }
+
+	        completeTodoItem(todoItem.todoItem, todoItem.doneBtn);
+	        deleteTodoItem(todoItem.todoItem, todoItem.deleteBtn);
+
+	        appList.append(todoItem.todoItem);
+	        todoItem.todoItem.append(todoItem.btnWrapper);
+    	}
+    }
+
 	appForm.form.addEventListener('submit', e => {
         e.preventDefault();
 
@@ -110,7 +135,13 @@ function createTodoApp(container, title, key) {
         completeTodoItem(todoItem.todoItem, todoItem.doneBtn);
         deleteTodoItem(todoItem.todoItem, todoItem.deleteBtn);
 
-        
+        let localStorageData = localStorage.getItem(key);
+
+        if (localStorageData == null) {
+        	todoArray = [];
+        } else {
+        	todoArray = JSON.parse(localStorageData);
+        }
 
         const createItemObj = (arr) => {
         	const itemObj = {};
@@ -128,11 +159,3 @@ function createTodoApp(container, title, key) {
         appForm.input.value = '';
 	})
 }
-
-
-
-
-
-
-
-
