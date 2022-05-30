@@ -124,6 +124,7 @@ function createTodoApp(container, title, key) {
     	}
     }
 
+
 	appForm.form.addEventListener('submit', e => {
         e.preventDefault();
 
@@ -159,3 +160,15 @@ function createTodoApp(container, title, key) {
         appForm.input.value = '';
 	})
 }
+
+
+
+
+let btnAllDelete = document.getElementById('del-all');
+
+btnAllDelete.addEventListener("click", () => {
+	localStorage.clear();
+	location.reload();
+});
+
+
