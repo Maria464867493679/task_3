@@ -18,13 +18,12 @@ body
 .title
 {
 	font-size: 42px;
-
+	margin: 40px 0px 30px 0px;
 }
 
 
 .block1
 {
-	margin-top: 40px;
 	width: 100%;
 }
 
@@ -41,10 +40,40 @@ input
 }
 .one
 {
+	width: 98%;
 	margin-top: 30px;
 	border-radius: 10px;
 	border: 1px solid grey;
 	padding: 17px;
 	box-sizing: border-box;
 	background-color: white;
+}
+
+.p_time
+{
+    text-align: right;
+}
+
+#hours
+{
+	width: 70px;
+}
+
+.add_task
+{
+	width: 100%;
+	height: 50px;
+	margin-top: 50px;
+}
+
+#all-del
+{
+	width: 100%;
+	height: 50px;
+	margin-top: 10px;
+}
+
+#variants 
+{
+	width: 100%;
 }
