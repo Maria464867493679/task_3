@@ -8,29 +8,54 @@
 </head>
 <body>
 <div class="wrapper">
-	<div class="title">Task list</div>
 
-
+<div class="title">Task name</div>
 	<div class="block1">
-		<form>
-			<input type="name" id="task-body" placeholder="Enter text..">
-			<button type="submit" id="task-add">ADD TASK</button>
-
-			<button>REMOVE ALL</button>
-			<button>READY ALL</button>
-		</form>
+		<input type="name" id="task-name" placeholder="Enter task name">
 	</div>
 
-	<div id="block2" class="block2">
-		<div id="one" class="one">
-			text text text text		
-			<button>READY</button>
-			<button>DELETE</button>
+<div class="title"> Subtask <button id="ss">+</button></div>
+	<div id="variants" name="my">
+		<div class="block1" id="block1">
+			<input type="name" name="name[]" id="task-body" placeholder="New task">
+			Time: <input type="text" id="hours">
+			<button class="del_variant"> X </button>
 		</div>
 	</div>
+<button type="submit" onclick="addTask()" class="add_task">ADD TASK</button>
+<button id="all-del">REMOVE ALL</button>
+
+<div id="block2" class="block2"></div>
 
 
 </div>
 <script type="text/javascript" src="script_add.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+<script>
+$(document)
+.ready(function () {
+    var variant = $('#block1')
+    .clone(true);
+	$('#ss')
+
+    .click(function () {
+        $(variant)
+		.clone(true)
+		.appendTo('#variants')
+		.fadeIn('slow')
+		.find("input[name*=name]")
+		.focus();
+    });
+    
+	$(document)
+	.on('click', 'button.del_variant:not(:first)', function () {
+	    $(this)
+	    .parents(".block1")
+	    .remove();
+	});
+});
+    </script>
+
 </body>
 </html>
