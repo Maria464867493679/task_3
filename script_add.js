@@ -1,28 +1,34 @@
 
-
-
-
-
-
-
-
 let tasks = [];
 loadTask();
 
-document.getElementById('task-add').onclick = function() {
+
+function addTask() {
 	event.preventDefault();
+
+	let taskName = document.getElementById('task-name');
 	let taskBody = document.getElementById('task-body');
+	let taskHours = document.getElementById('hours');
 
 	let task = {
-		body : taskBody.value,
-		time : Math.floor(Date.now()/1000)
+		name: taskName.value,
+		body: taskBody.value,
+		hours: taskHours.value,
+		time: Math.floor(Date.now()/1000),
 	}
+
+	taskName.value = '';
 	taskBody.value = '';
+	taskHours.value = '';
 	tasks.push(task);
 
 	saveTask();
 	showTasks();
+
+	const a = localStorage.setItem('body', 'value');
+	if (true) {}
 }
+
 
 function saveTask() {
 	localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -38,8 +44,9 @@ function showTasks() {
 	let out = '';
 
 	tasks.forEach(function(item) {
-		out += `<div class="one"><p><em>${timeConverter(item.time)}</em></p>`;
-		out += `<p>${item.body}</p></div>`;
+		out += `<div class="one" id="one"><p class="p_time"><em>${timeConverter(item.time)}</em></p>`;
+		out += `<p><b>${item.name}</b></p>`;
+		out += `<ul><li>${item.body} - ${item.hours}h</li></ul></div>`;
 	});
 	taskField.innerHTML = out;
 }
@@ -57,6 +64,11 @@ function timeConverter(UNIX_timestamp) {
 	return time; 
 }
 
+let btnAllDelete = document.getElementById('all-del');
 
+btnAllDelete.addEventListener("click", () => {
+	localStorage.clear();
+	location.reload();
+});
 
 
